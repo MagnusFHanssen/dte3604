@@ -134,5 +134,9 @@ target_sources( ${PROJECT_NAME} PRIVATE
   application/main.cpp
 
   scenario.cpp
+
+  # Custom
+  custom/bsplinecustom.cpp
+  custom/lotus.cpp
   )
 

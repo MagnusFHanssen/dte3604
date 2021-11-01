@@ -228,17 +228,17 @@ namespace GMlib {
   DVector<Vector<T,n>>& PCurve<T,n>::evaluateParent( int i, int j ) const {
 
       static DVector< Vector<T,n> > p;
-      uint k = getSample_d(i,j);
+      unsigned int k = getSample_d(i,j);
       p.setDim(k);
 
       if(this->_scale.isActive()) {
           p[0] = _mat * (getSamplePoint(i,j) % this->_scale.getScale());
-          for( uint s = 1; s < k; s++ )
+          for( unsigned int s = 1; s < k; s++ )
               p[s] = _mat * static_cast<Vector<T,n>>(getSampleDerivative(i,j,s) % this->_scale.getScale());
       }
       else {
           p[0] = _mat * getSamplePoint(i,j);
-          for( uint s = 1; s < k; s++ )
+          for( unsigned int s = 1; s < k; s++ )
               p[s] = _mat * getSampleDerivative(i,j,s);
       }
       return p;
@@ -772,7 +772,7 @@ namespace GMlib {
       _visu.no_derivatives = sample.no_derivatives;
       _visu.no_sample      = sample.no_sample;
       _visu.resize(sample.size());
-    for(uint i=0; i<_visu.size(); i++)
+    for(unsigned int i=0; i<_visu.size(); i++)
       preSample( sample[i], _visu.no_derivatives, i );
 }
 
@@ -1019,16 +1019,16 @@ namespace GMlib {
 
       // If it is a curve visualiser we need to know if it only must be made active or made in total
       int j = -1;
-      for(uint i=0; i<_visu[0].vis.size(); i++)
+      for(unsigned int i=0; i<_visu[0].vis.size(); i++)
         if(visu == _visu[0].vis[i])   j=i;
 
       if(j>=0){
-          for(uint i=0; i< _visu.size(); i++)
+          for(unsigned int i=0; i< _visu.size(); i++)
             SceneObject::insertVisualizer(_visu[i].vis[j]);
       } else{
         _visu[0].vis.push_back(visu);
         SceneObject::insertVisualizer(visu);
-        for(uint i=1; i< _visu.size(); i++) {
+        for(unsigned int i=1; i< _visu.size(); i++) {
           PCurveVisualizer<T,n>* v = dynamic_cast<PCurveVisualizer<T,n>*>(visu->makeCopy());
             _visu[i].vis.push_back(v);
             SceneObject::insertVisualizer(v);
@@ -1089,7 +1089,7 @@ namespace GMlib {
 
       p.resize(t.size());
       s.reset();
-      for( uint i = 0; i < t.size(); i++ ) {
+      for( unsigned int i = 0; i < t.size(); i++ ) {
         _eval( t[i], d, true);
         p[i] = _p;
       }
@@ -1155,9 +1155,9 @@ namespace GMlib {
     void  PCurve<T,n>::prepareVisualizers() {
 
         // Updating visualizers in new partitions
-        for(uint i=1; i < _visu.size(); i++)
+        for(unsigned int i=1; i < _visu.size(); i++)
             if(_visu[i].vis.size() == 0) {
-                for(uint j=0; j < _visu[0].vis.size(); j++) {
+                for(unsigned int j=0; j < _visu[0].vis.size(); j++) {
                     PCurveVisualizer<T,3>* vis = dynamic_cast<PCurveVisualizer<T,3>*>(_visu[0].vis[j]->makeCopy());
                     _visu[i].vis.push_back(vis);
                     SceneObject::insertVisualizer(vis);

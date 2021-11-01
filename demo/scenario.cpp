@@ -3,6 +3,7 @@
 
 #include "scenario.h"
 #include "testtorus.h"
+#include "custom/lotus.h"
 
 
 // hidmanager
@@ -21,7 +22,7 @@ template <typename T>
 inline
 std::ostream& operator<<(std::ostream& out, const std::vector<T>& v) {
   out << v.size() << std::endl;
-  for(uint i=0; i<v.size(); i++) out << " " << v[i];
+  for(unsigned int i=0; i<v.size(); i++) out << " " << v[i];
   out << std::endl;
   return out;
 }
@@ -63,20 +64,25 @@ void Scenario::initializeScenario() {
    *                                                                         *
    ***************************************************************************/
 
-  GMlib::Material mm(GMlib::GMmaterial::polishedBronze());
-  mm.set(45.0);
+//  GMlib::Material mm(GMlib::GMmaterial::polishedBronze());
+//  mm.set(45.0);
 
-  auto ptom = new TestTorus(1.0f, 0.4f, 0.6f);
-  ptom->toggleDefaultVisualizer();
-  ptom->sample(60,60,1,1);
-  this->scene()->insert(ptom);
-  auto ptrack = new GMlib::PathTrack();
-  ptrack->setLineWidth(2);
-  ptom->insert(ptrack);
-  auto ptrack2 = new GMlib::PathTrackArrows();
-  ptrack2->setArrowLength(2);
-  ptom->insert(ptrack2);
+//  auto ptom = new TestTorus(1.0f, 0.4f, 0.6f);
+//  ptom->toggleDefaultVisualizer();
+//  ptom->sample(60,60,1,1);
+//  this->scene()->insert(ptom);
+//  auto ptrack = new GMlib::PathTrack();
+//  ptrack->setLineWidth(2);
+//  ptom->insert(ptrack);
+//  auto ptrack2 = new GMlib::PathTrackArrows();
+//  ptrack2->setArrowLength(2);
+//  ptom->insert(ptrack2);
 
+  auto lotus = new GMlib::Lotus();
+  lotus->toggleDefaultVisualizer();
+  lotus->sample(500);
+  this->scene()->insert(lotus);
+  lotus->setColor(GMlib::Color(153, 255 ,255));
 }
 
 

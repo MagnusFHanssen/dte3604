@@ -208,7 +208,7 @@ namespace GL {
   // Complete spesification: https://www.opengl.org/registry/specs/ARB/uniform_buffer_object.txt
   // Section 2.15.3.1.2
   //
-  // N = size of base unit (uint|int|float)
+  // N = size of base unit (unsigned int|int|float)
 
   struct GLLightHeader {      //  4 N
     GLuint    no_lights;

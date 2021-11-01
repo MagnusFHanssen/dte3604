@@ -1,0 +1,61 @@
+########################
+## Globaly ignored files
+*~
+*.save
+*.bak
+*.back
+*.backup
+*.o
+*.lib
+*.a
+*.obj
+*.so
+*.layout
+*.user
+*.suo
+*.ncb
+*.swp
+*.moc
+*.user*
+*.cbp
+*.autosave
+# Clang temp files QtCreator wintendo
+*.c.*
+
+#
+########
+## CMake
+CMakeCache.txt
+cmake_install.cmake
+CMakeFiles/
+build/
+BUILD/
+
+########
+## CTest
+CTestTestfile.cmake
+Testing/
+
+#
+##################################
+## QMake (Deprecated build-system)
+*.pro
+*.pri
+
+#
+########################################
+## Ignored project files and directories
+Makefile
+Makefile.Debug
+Makefile.Release
+object_script.GMlib.Debug
+object_script.GMlib.Release
+include/
+lib/
+.kdev4/
+*.kdev4
+
+#
+##########################################
+# Ignored Ct Creator spesifics directories
+qtc-gdbmacros

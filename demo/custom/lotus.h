@@ -4,14 +4,16 @@
 //#include "../../gmlib/modules/parametrics/gmpcurve.h"
 #include <parametrics/gmpcurve.h>
 
-namespace GMlib {
+namespace Custom {
 
+using namespace GMlib;
 
 class Lotus : public PCurve<double,3>
 {
     GM_SCENEOBJECT(Lotus)
 public:
     Lotus(double size=1.0);
+    Lotus(const Lotus& copy);
     ~Lotus();
 
     bool isClosed() const override;

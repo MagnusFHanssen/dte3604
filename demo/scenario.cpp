@@ -4,6 +4,7 @@
 #include "scenario.h"
 #include "testtorus.h"
 #include "custom/lotus.h"
+#include "custom/bsplinecustom.h"
 
 
 // hidmanager
@@ -78,11 +79,36 @@ void Scenario::initializeScenario() {
 //  ptrack2->setArrowLength(2);
 //  ptom->insert(ptrack2);
 
-  auto lotus = new GMlib::Lotus();
-  lotus->toggleDefaultVisualizer();
-  lotus->sample(500);
-  this->scene()->insert(lotus);
-  lotus->setColor(GMlib::Color(153, 255 ,255));
+//  auto lotus = new Custom::Lotus();
+//  lotus->toggleDefaultVisualizer();
+//  lotus->sample(400);
+//  this->scene()->insert(lotus);
+//  lotus->setColor(GMlib::Color(153, 255 ,255));
+
+  GMlib::DVector<GMlib::Point<double,3>> controlPoints(9);
+  controlPoints[0] = GMlib::Point<double,3>(0, 0, 0);
+  controlPoints[1] = GMlib::Point<double,3>(0, 1, 0);
+  controlPoints[2] = GMlib::Point<double,3>(3, 0, 1);
+  controlPoints[3] = GMlib::Point<double,3>(3, 4, 0);
+  controlPoints[4] = GMlib::Point<double,3>(0, 1, 6);
+  controlPoints[5] = GMlib::Point<double,3>(1, 1, 1);
+  controlPoints[6] = GMlib::Point<double,3>(0, 8, 0);
+  controlPoints[7] = GMlib::Point<double,3>(0, 1, 8);
+  controlPoints[8] = GMlib::Point<double,3>(9, 0, 1);
+
+
+  auto spline = new Custom::BSplineCustom<double>(controlPoints);
+  spline->toggleDefaultVisualizer();
+  spline->sample(200, 0);
+  this->scene()->insert(spline);
+  spline->setColor(GMlib::GMcolor::red());
+
+  auto spline2 = new Custom::BSplineCustom<double>(controlPoints);
+  spline2->toggleDefaultVisualizer();
+  spline2->setBlending(true);
+  spline2->sample(200, 0);
+  this->scene()->insert(spline2);
+  spline2->setColor(GMlib::GMcolor::green());
 }
 
 

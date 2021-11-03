@@ -41,9 +41,12 @@ using namespace GMlib;
 
         T _blend(T w) const;
 
+        int _getIndex(T t) const;
 
 
-        void makeKnots(int n);
+
+        void makeKnots(int n, T start = 0, T end = 1);
+        void makeControlPoints(const DVector<Point<T,3>>& p, int n);
 
     };
 }

@@ -15,6 +15,9 @@
 #include <scene/sceneobjects/gmpathtrack.h>
 #include <scene/sceneobjects/gmpathtrackarrows.h>
 
+#include <parametrics/surfaces/gmpsphere.h>
+#include <parametrics/curves/gmpline.h>
+
 // qt
 #include <QQuickItem>
 
@@ -95,6 +98,22 @@ void Scenario::initializeScenario() {
   controlPoints[6] = GMlib::Point<double,3>(0, 8, 0);
   controlPoints[7] = GMlib::Point<double,3>(0, 1, 8);
   controlPoints[8] = GMlib::Point<double,3>(9, 0, 1);
+
+  for (int i = 0; i < 9; i++){
+      auto sph = new GMlib::PSphere<double>(0.1);
+      sph->toggleDefaultVisualizer();
+      sph->translate(controlPoints[i]);
+      sph->sample(8, 8, 1, 1);
+      this->scene()->insert(sph);
+
+  }
+  for (int i = 0; i < 8; i++){
+      auto lin = new GMlib::PLine<double>(controlPoints[i], controlPoints[i+1]);
+      lin->toggleDefaultVisualizer();
+      lin->sample(2);
+      lin->setColor(GMlib::GMcolor::aliceBlue());
+      this->scene()->insert(lin);
+  }
 
 
   auto spline = new Custom::BSplineCustom<double>(controlPoints);

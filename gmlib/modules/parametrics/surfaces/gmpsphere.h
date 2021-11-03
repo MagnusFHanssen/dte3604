@@ -69,7 +69,7 @@ namespace GMlib {
 
   private:
     // Virtual function from PSurf
-    void   resampleNormals( const DMatrix<DMatrix<Vector<T,3> > >& sample, DMatrix<Vector<T,3> >& normals ) const override;
+    void   resampleNormals( const DMatrix<DMatrix<Vector<T,3> > >& sample, DMatrix<Vector<float,3> >& normals ) const override;
     void   computeSurroundingSphere( const DMatrix<DMatrix<Vector<T,3>>>& p, Sphere<T,3>& s ) const override;
 
     // Help function to initiate
@@ -79,7 +79,7 @@ namespace GMlib {
     void   init_mat1();
 
     // static normal map for display
-    static DMatrix< Vector<T,3> >  _nmap;
+    static DMatrix< Vector<float,3> >  _nmap;
     static DVector<DVector<int> >  _mat1;
     static DVector<Vector<int,2> > _mat1_size;
 

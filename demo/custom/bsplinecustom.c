@@ -85,7 +85,7 @@ Vector<T,3> BSplineCustom<T>::B(T t, int i) const{
 
 template <typename T>
 T BSplineCustom<T>::_blend(T w) const {
-    return w - T(1.0/(2.0 * M_2PI))*sin(2.0*M_2PI*w);
+    return w - T(1.0/(M_2PI))*sin(M_2PI*w);
 }
 
 

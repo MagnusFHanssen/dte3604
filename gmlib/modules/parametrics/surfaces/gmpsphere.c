@@ -267,7 +267,7 @@ namespace GMlib {
 
 
   template <typename T>
-  void PSphere<T>::resampleNormals(const DMatrix<DMatrix<Vector<T,3>>>& p, DMatrix<Vector<T,3> >& n) const {
+  void PSphere<T>::resampleNormals(const DMatrix<DMatrix<Vector<T,3>>>& p, DMatrix<Vector<float,3> >& n) const {
 //    if(_nmap.getDim1() == 0) makeNmap(64,64);
     makeNmap(p.getDim1(), p.getDim2());
     n = _nmap;
@@ -306,7 +306,7 @@ namespace GMlib {
 
 
   template <typename T>
-  DMatrix<Vector<T,3> > PSphere<T>::_nmap;
+  DMatrix<Vector<float,3> > PSphere<T>::_nmap;
 
   template <typename T>
   inline

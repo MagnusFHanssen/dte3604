@@ -6,6 +6,7 @@
 #include "custom/lotus.h"
 #include "custom/bsplinecustom.h"
 #include "custom/laneriesenfeldclosed.h"
+#include "custom/blendingspline.h"
 
 
 // hidmanager
@@ -92,7 +93,7 @@ void Scenario::initializeScenario() {
 
   // The controls for quicly swapping between several configuration without comments
   bool showDottedLines = false;
-  bool showControlPoly = true;
+  bool showControlPoly = false;
 
 
   GMlib::DVector<GMlib::Point<double, 3>> controlPoints(9);
@@ -133,7 +134,7 @@ void Scenario::initializeScenario() {
     spline->toggleDefaultVisualizer();
   }
   spline->sample(200, 0);
-//  this->scene()->insert(spline);
+  //this->scene()->insert(spline);
 
 
   auto spline2 = new Custom::BSplineCustom<double>(controlPoints);
@@ -147,24 +148,32 @@ void Scenario::initializeScenario() {
   spline2->sample(200, 0);
 //  this->scene()->insert(spline2);
 
-//  GMlib::DVector<GMlib::Point<double,3>> points(12);
-//  for (int i  =0; i < 12; i++){
-//      points[i] = GMlib::Point<double,3>(10*cos(i * M_PI/6),
-//                                         10*sin(i * M_PI/6),
-//                                          0.0);
-//  }
+  GMlib::DVector<GMlib::Point<double,3>> points(12);
+  for (int i  =0; i < 12; i++){
+      points[i] = GMlib::Point<double,3>(10*cos(i * M_PI/6),
+                                         10*sin(i * M_PI/6),
+                                          0.0);
+  }
 
-  auto spline3 = new Custom::BSplineCustom<double>(controlPoints, 5);
+  auto spline3 = new Custom::BSplineCustom<double>(points, 5);
   spline3->setColor(GMlib::GMcolor::yellow());
   spline3->toggleDefaultVisualizer();
   spline3->setBlending(false);
   spline3->sample(200, 0);
-//  this->scene()->insert(spline3);
+  //this->scene()->insert(spline3);
 
-  auto lr = new Custom::LaneRiesenfeldClosed<double>(controlPoints, 3);
+  auto lr = new Custom::LaneRiesenfeldClosed<double>(controlPoints, 2);
   lr->sample(4, 0);
   lr->toggleDefaultVisualizer();
-  this->scene()->insert(lr);
+  //this->scene()->insert(lr);
+
+  auto bls = new Custom::BlendingSpline<double>(spline3, 4);
+  bls->toggleDefaultVisualizer();
+  bls->sample(20, 0);
+  bls->showControlCurves();
+  this->scene()->insert(bls);
+
+
 
 }
 

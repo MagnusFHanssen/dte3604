@@ -22,6 +22,10 @@ void LaneRiesenfeldClosed<T>::resample(std::vector<DVector<Vector<T, 3>>> &p,
   p.resize(m);
   s.reset();
 
+  for (int i = 0; i < m; i++){
+      p[i].setDim(1);
+  }
+
   for (int i = 0; i < n; i++) {
     p[i][0] = _p[i];
   }
@@ -56,7 +60,6 @@ void LaneRiesenfeldClosed<T>::_smoothPoints(
     }
     p[no_elements][0] = p[0][0];
   }
-  std::cout << p[0][0] << std::endl;
 }
 
 } // namespace Custom

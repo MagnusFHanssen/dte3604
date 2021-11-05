@@ -6,7 +6,8 @@ using namespace GMlib;
 
 template <typename T>
 BlendingSpline<T>::BlendingSpline(PCurve<T, 3> *copy, int n)
-    : PCurve<T, 3>(20, 0, 0), _t_start{copy->getParStart()}, _t_end{copy->getParEnd()}, _closed{copy->isClosed()} {
+    : PCurve<T, 3>(20, 0, 0), _t_start{copy->getParStart()},
+      _t_end{copy->getParEnd()}, _closed{copy->isClosed()} {
 
   _makeKnots(n, _t_start, _t_end);
 
@@ -29,9 +30,11 @@ template <typename T>
 void BlendingSpline<T>::_makeKnots(int n, T start, T end) {
   _t = {start, start};
 
-  T frac = (end - start)/(n);
+  int n_ = n - (_closed ? 0 : 1);
 
-  for (int i = 1; i < n; i++) {
+  T frac = (end - start) / n_;
+
+  for (int i = 1; i < n_; i++) {
     _t.push_back(start + i * frac);
   }
 
@@ -50,7 +53,7 @@ void BlendingSpline<T>::_makeControlCurves(PCurve<T, 3> *curve) {
   _c.resize(n);
   if (_closed) { // If the curve is closed, the ends are the same
     _c[0] = new PSubCurve<T>(curve, _t[n - 1], _t[2], _t[1]);
-    for (int i = 1; i < n - 3; i++) {
+    for (int i = 1; i < n; i++) {
       _c[i] = new PSubCurve<T>(curve, _t[i], _t[i + 2], _t[i + 1]);
     }
     _c[n - 3] = _c[0];
@@ -69,11 +72,13 @@ void BlendingSpline<T>::eval(T t, int d, bool left) const {
 
   auto b = B(t, i);
 
-  this->_p[0] = b[0] * c(i - 1, t) + b[1] * c(i, t);
+  auto c_m = c(i - 1, t);
+  auto c_i = c(i, t);
+
+  this->_p[0] = c_m + b[1] * (c_i - c_m);
 }
 
 template <typename T> int BlendingSpline<T>::_getIndex(T t) const {
-
   if (t == this->getEndP()) {
     return _t.size() - 3;
   } else {
@@ -100,16 +105,17 @@ template <typename T> Point<T, 3> BlendingSpline<T>::c(int i, T t) const {
   T w_t = w(t, i, 2);
   T c_t = _c[i]->getParEnd() * w_t + _c[i]->getParStart() * (1 - w_t);
 
-  return _c[i]->evaluateParent(c_t)[0];
+  return _c[i]->evaluateParent(c_t, 0)[0];
 }
 
-template <typename T>
-void BlendingSpline<T>::showControlCurves(){
-    for (PCurve<T,3>* curve: _c){
-        curve->sample(20, 0);
-        curve->toggleDefaultVisualizer();
-        curve->setColor(GMcolor::aliceBlue());
-        this->insert(curve);
-    }
+template <typename T> void BlendingSpline<T>::showControlCurves() {
+
+  for (PCurve<T, 3> *curve : _c) {
+    curve->setCollapsed(true);
+    curve->sample(20, 0);
+    curve->toggleDefaultVisualizer();
+    curve->setColor(GMcolor::aliceBlue());
+    this->insert(curve);
+  }
 }
 } // namespace Custom

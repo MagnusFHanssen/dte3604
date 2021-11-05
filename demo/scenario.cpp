@@ -84,11 +84,11 @@ void Scenario::initializeScenario() {
   //  ptrack2->setArrowLength(2);
   //  ptom->insert(ptrack2);
 
-  //  auto lotus = new Custom::Lotus();
-  //  lotus->toggleDefaultVisualizer();
-  //  lotus->sample(400);
-  //  this->scene()->insert(lotus);
-  //  lotus->setColor(GMlib::Color(153, 255 ,255));
+    auto lotus = new Custom::Lotus();
+    lotus->toggleDefaultVisualizer();
+    lotus->sample(400);
+    //this->scene()->insert(lotus);
+    lotus->setColor(GMlib::Color(153, 255 ,255));
 
 
   // The controls for quicly swapping between several configuration without comments
@@ -167,13 +167,12 @@ void Scenario::initializeScenario() {
   lr->toggleDefaultVisualizer();
   //this->scene()->insert(lr);
 
-  auto bls = new Custom::BlendingSpline<double>(spline3, 4);
+  auto bls = new Custom::BlendingSpline<double>(lotus, 3);
   bls->toggleDefaultVisualizer();
-  bls->sample(20, 0);
-  bls->showControlCurves();
+  //bls->insertVisualizer(c_viz);
+  bls->sample(10000, 0);
+  //bls->showControlCurves();
   this->scene()->insert(bls);
-
-
 
 }
 

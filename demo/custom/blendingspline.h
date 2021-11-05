@@ -23,6 +23,8 @@ protected:
   T getStartP() const override;
   T getEndP() const override;
 
+  void localSimulate(double dt) override;
+
 private:
   std::vector<PSubCurve<T> *> _c;
   std::vector<T> _t;
@@ -43,6 +45,8 @@ private:
   T _blend(T w) const;
 
   Point<T,3> c(int i, T t) const;
+
+  double _angle = 0.0;
 };
 } // namespace Custom
 #include "blendingspline.c"

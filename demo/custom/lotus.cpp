@@ -20,12 +20,12 @@ void Lotus::eval(double t, int d, bool left) const
 {
     this->_p.setDim(d + 1);
 
-    const auto x = _s * (cos(16 * M_2PI * t) + cos(6 * M_2PI * t) / 2.0
-                    + sin(10 * M_2PI * t) / 3.0);
-    const auto y = _s * (sin(16 * M_2PI * t) + sin(6 * M_2PI * t) / 2.0
-                    + cos(10 * M_2PI * t) / 3.0);
+    const auto y = _s * (cos(8 * M_2PI * t) + cos(3 * M_2PI * t) / 2.0
+                    + sin(5 * M_2PI * t) / 3.0);
+    const auto x = _s * (sin(8 * M_2PI * t) + sin(3 * M_2PI * t) / 2.0
+                    + cos(5 * M_2PI * t) / 3.0);
 
-    const auto z = _s * 0.2 * sin(18 * M_2PI * t);
+    const auto z = _s * 0.2 * sin(9 * M_2PI * t);
 
     this->_p[0][0] = x;
     this->_p[0][1] = y;

@@ -21,6 +21,8 @@
 #include <parametrics/curves/gmpline.h>
 #include <parametrics/visualizers/gmpcurvepointsvisualizer.h>
 
+#include <parametrics/curves/gmpcircle.h>
+
 // qt
 #include <QQuickItem>
 
@@ -167,10 +169,12 @@ void Scenario::initializeScenario() {
   lr->toggleDefaultVisualizer();
   //this->scene()->insert(lr);
 
-  auto bls = new Custom::BlendingSpline<double>(lotus, 3);
+  auto circle = new GMlib::PCircle<double>();
+
+  auto bls = new Custom::BlendingSpline<double>(lotus, 10);
   bls->toggleDefaultVisualizer();
   //bls->insertVisualizer(c_viz);
-  bls->sample(10000, 0);
+  bls->sample(200, 0);
   //bls->showControlCurves();
   this->scene()->insert(bls);
 

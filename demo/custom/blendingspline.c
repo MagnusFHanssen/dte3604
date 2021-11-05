@@ -43,20 +43,20 @@ void BlendingSpline<T>::_makeKnots(int n, T start, T end) {
 
   if (_closed) {
     _t[0] = start - frac;
-    _t[n + 1] = end + frac;
+    _t[n_ + 2] = end + frac;
   }
 }
 
 template <typename T>
 void BlendingSpline<T>::_makeControlCurves(PCurve<T, 3> *curve) {
-  const int n = _t.size() - 2;
+  int n = _t.size() - 2;
   _c.resize(n);
   if (_closed) { // If the curve is closed, the ends are the same
-    _c[0] = new PSubCurve<T>(curve, _t[n - 1], _t[2], _t[1]);
-    for (int i = 1; i < n; i++) {
+      n--;
+    for (int i = 0; i < n; i++) {
       _c[i] = new PSubCurve<T>(curve, _t[i], _t[i + 2], _t[i + 1]);
     }
-    _c[n - 3] = _c[0];
+    _c[n] = _c[0];
   } else {
     for (int i = 0; i < n; i++) {
       _c[i] = new PSubCurve<T>(curve, _t[i], _t[i + 2], _t[i + 1]);
@@ -117,5 +117,17 @@ template <typename T> void BlendingSpline<T>::showControlCurves() {
     curve->setColor(GMcolor::aliceBlue());
     this->insert(curve);
   }
+}
+
+template <typename T>
+void BlendingSpline<T>::localSimulate(double dt){
+    double r = 0.000001 + (1.0 - (1.0/(48 * M_PI))*(27*cos(_angle) - 3*cos(3*_angle))) * dt;
+    for (auto &curve: _c){
+        curve->rotate(Angle(r), Vector<T,3>(0, 0, 1));
+    }
+    _angle += r;
+    if (_angle >= M_2PI){_angle -= M_2PI;}
+    this->resample();
+    this->setEditDone();
 }
 } // namespace Custom

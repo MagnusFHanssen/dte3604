@@ -7,6 +7,7 @@
 #include "custom/bsplinecustom.h"
 #include "custom/laneriesenfeldclosed.h"
 #include "custom/blendingspline.h"
+#include "custom/modelsurface.h"
 
 
 // hidmanager
@@ -14,8 +15,12 @@
 
 // gmlib
 #include <scene/light/gmpointlight.h>
+#include <scene/sceneobjects/gmpointlightg.h>
 #include <scene/sceneobjects/gmpathtrack.h>
 #include <scene/sceneobjects/gmpathtrackarrows.h>
+
+#include <parametrics/visualizers/gmpsurfnormalsvisualizer.h>
+#include <parametrics/visualizers/gmpsurfderivativesvisualizer.h>
 
 #include <parametrics/surfaces/gmpsphere.h>
 #include <parametrics/curves/gmpline.h>
@@ -39,11 +44,12 @@ void Scenario::initializeScenario() {
 
   // Insert a light
   GMlib::Point<GLfloat, 3> init_light_pos(2.0, 4.0, 10);
-  GMlib::PointLight *light =
-      new GMlib::PointLight(GMlib::GMcolor::white(), GMlib::GMcolor::white(),
+  GMlib::PointLightG *light =
+      new GMlib::PointLightG(GMlib::GMcolor::white(), GMlib::GMcolor::white(),
                             GMlib::GMcolor::white(), init_light_pos);
   light->setAttenuation(0.8f, 0.002f, 0.0008f);
   this->scene()->insertLight(light, false);
+  this->scene()->insert(light);
 
   // Insert Sun
   this->scene()->insertSun();
@@ -135,7 +141,7 @@ void Scenario::initializeScenario() {
   } else {
     spline->toggleDefaultVisualizer();
   }
-  spline->sample(200, 0);
+  //spline->sample(200, 0);
   //this->scene()->insert(spline);
 
 
@@ -147,7 +153,7 @@ void Scenario::initializeScenario() {
     spline2->toggleDefaultVisualizer();
   }
   spline2->setBlending(true);
-  spline2->sample(200, 0);
+  //spline2->sample(200, 0);
 //  this->scene()->insert(spline2);
 
   GMlib::DVector<GMlib::Point<double,3>> points(12);
@@ -161,7 +167,7 @@ void Scenario::initializeScenario() {
   spline3->setColor(GMlib::GMcolor::yellow());
   spline3->toggleDefaultVisualizer();
   spline3->setBlending(false);
-  spline3->sample(200, 0);
+  //spline3->sample(200, 0);
   //this->scene()->insert(spline3);
 
   auto lr = new Custom::LaneRiesenfeldClosed<double>(controlPoints, 2);
@@ -174,10 +180,20 @@ void Scenario::initializeScenario() {
   auto bls = new Custom::BlendingSpline<double>(lotus, 10);
   bls->toggleDefaultVisualizer();
   //bls->insertVisualizer(c_viz);
-  bls->sample(200, 0);
+  //bls->sample(200, 0);
   //bls->showControlCurves();
-  this->scene()->insert(bls);
+  //this->scene()->insert(bls);
 
+  auto surf1 = new Custom::ModelSurface<double>();
+
+  auto n_vis = new GMlib::PSurfNormalsVisualizer<double, 3>();
+  auto d_vis = new GMlib::PSurfDerivativesVisualizer<double, 3>(0, 1);
+
+  surf1->toggleDefaultVisualizer();
+  //surf1->insertVisualizer(n_vis);
+
+  surf1->sample(200, 200, 1, 1);
+  this->scene()->insert(surf1);
 }
 
 void Scenario::cleanupScenario() {}

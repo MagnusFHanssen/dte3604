@@ -1,18 +1,19 @@
-#ifndef MODELSURFACE_H
-#define MODELSURFACE_H
+#ifndef CTORUS_H
+#define CTORUS_H
 
 #include <parametrics/gmpsurf.h>
 
-namespace Custom {
+namespace Custom{
 
 using namespace GMlib;
 
-template <typename T> class ModelSurface : public PSurf<T, 3>
+template <typename T>
+class CTorus : public PSurf<T, 3>
 {
-    GM_SCENEOBJECT(ModelSurface)
+    GM_SCENEOBJECT(CTorus)
 public:
-    ModelSurface(unsigned int n = 5, T a = T(1), T b = T(0.3));
-    ~ModelSurface();
+    CTorus(T a = T(2), T b = T(3));
+    ~CTorus();
 
     bool isClosedU() const override;
     bool isClosedV() const override;
@@ -25,14 +26,11 @@ public:
     T getStartPV() const override;
     T getEndPV() const override;
 
-    void init();
-
 private:
     T _a;
     T _b;
-    unsigned int _n;
 };
 }
 
-#include "modelsurface.c"
-#endif // MODELSURFACE_H
+#include "ctorus.c"
+#endif // CTORUS_H

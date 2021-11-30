@@ -5,11 +5,8 @@ namespace Custom {
 using namespace GMlib;
 
 template <typename T> inline
-    ModelSurface<T>::ModelSurface() : PSurf<T, 3>(){
-    _a = T(1.0);
-    _b = T(0.3);
-    _n = 3;
-}
+    ModelSurface<T>::ModelSurface(unsigned int n, T a, T b) : PSurf<T, 3>(),
+    _n{n}, _a{a}, _b{b}{}
 
 template <typename T>
 ModelSurface<T>::~ModelSurface(){}
@@ -63,9 +60,9 @@ void ModelSurface<T>::eval( T u, T v, int d1, int d2, bool lu, bool lv) const{
             this->_p[1][0][2] =  r_du * z + r * z_du;
         }
         if(d2){ // Sv
-            this->_p[0][1][0] =  - r_dv * x + r * x_dv;
-            this->_p[0][1][1] =  - r_dv * y + r * y_dv;
-            this->_p[0][1][2] =  - r_dv * z + r * z_dv;
+            this->_p[0][1][0] =  r_dv * x + r * x_dv;
+            this->_p[0][1][1] =  r_dv * y + r * y_dv;
+            this->_p[0][1][2] =  r_dv * z + r * z_dv;
         }
     }
 }

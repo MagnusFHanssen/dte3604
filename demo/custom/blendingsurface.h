@@ -38,7 +38,10 @@ private:
     T _startV;
     T _endV;
 
+    std::vector<T> _tU;
+    std::vector<T> _tV;
 
+    void _fillKnotVector(std::vector<T> &t, const T startP, const T endP, int steps, bool closed);
 
 };
 }

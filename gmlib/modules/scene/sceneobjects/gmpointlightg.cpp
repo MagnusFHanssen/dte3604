@@ -33,54 +33,58 @@
 namespace GMlib {
 
 
-  PointLightG::PointLightG() {
-
+PointLightG::PointLightG(float r):_sphere(r) {
     init();
-  }
+}
 
 
-  PointLightG::PointLightG( const Point<float,3>& pos) : PointLight( pos ) {
 
+
+PointLightG::PointLightG( const Point<float,3>& pos) : PointLight( pos ), _sphere(0.5f) {
     init();
-  }
+}
 
 
-	PointLightG::PointLightG(
-    const Color& amb,
-    const Color& dif,
-    const Color& spe,
-    const Point<float,3>& pos
-  ) : PointLight( amb, dif, spe, pos ) {
 
+
+PointLightG::PointLightG(const Color& amb, const Color& dif, const Color& spe, const Point<float,3>& pos) : PointLight(amb,dif,spe,pos), _sphere(0.5f) {
     init();
-  }
+}
 
 
-  PointLightG::PointLightG( const PointLight& copy ) : PointLight( copy ) {
 
+
+PointLightG::PointLightG( const PointLight& copy ) : PointLight( copy ) {
     init();
-  }
+}
 
 
-  PointLightG::PointLightG( const PointLightG& copy ) : PointLight( copy ) {
 
-    setSurroundingSphere( Sphere<float,3>( Point<float,3>( 0.0 ), 1.0 ) );
-  }
 
-  void PointLightG::localDisplay(const DefaultRenderer* renderer) const {
+PointLightG::PointLightG( const PointLightG& copy ) : PointLight( copy ) {
+    setSurroundingSphere( copy._sphere );
+}
 
-    _sphere.render( this->getModelViewProjectionMatrix(renderer->getCamera()), getAmbient() );
-  }
 
-  void PointLightG::localSelect(const Renderer* renderer, const Color& color) const {
 
+
+void PointLightG::localDisplay(const DefaultRenderer* renderer) const {
+    _sphere.render(this->getModelViewMatrix(renderer->getCamera()), this->getProjectionMatrix(renderer->getCamera()), renderer, this->getMaterial());
+}
+
+
+
+
+void PointLightG::localSelect(const Renderer* renderer, const Color& color) const {
     _sphere.render( this->getModelViewProjectionMatrix(renderer->getCamera()), color );
-  }
+}
 
 
-  void PointLightG::init() {
 
-    setSurroundingSphere( Sphere<float,3>( Point<float,3>( 0.0 ), 1.0 ) );
-  }
+
+void PointLightG::init() {
+    this->setMaterial(GMlib::GMmaterial::snow());
+    this->setSurroundingSphere( _sphere );
+}
 
 } // END namespace GMlib

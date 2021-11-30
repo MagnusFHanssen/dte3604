@@ -205,7 +205,7 @@ namespace GL {
         "in vec4 in_vertex;\n"
         "in vec4 in_normal;\n"
         "\n"
-        "out vec4 out_Position;\n"
+        "out vec4 gl_Position;\n"
         "\n"
         "smooth out vec3 ex_pos;\n"
         "smooth out vec3 ex_normal;\n"
@@ -221,7 +221,7 @@ namespace GL {
         "  ex_pos = v_pos.xyz * v_pos.w;\n"
         "\n"
         "  // Compute vertex position\n"
-        "  out_Position = u_mvpmat * in_vertex;\n"
+        "  gl_Position = u_mvpmat * in_vertex;\n"
         "}\n"
         ;
 
@@ -239,7 +239,7 @@ namespace GL {
         "smooth in vec3    ex_pos;\n"
         "smooth in vec3    ex_normal;\n"
         "\n"
-        "out vec4 out_FragColor;\n"
+        "out vec4 fragColor;\n"
         "\n"
         "void main() {\n"
         "\n"
@@ -251,7 +251,7 @@ namespace GL {
         "  mat.specular  = u_mat_spc;\n"
         "  mat.shininess = u_mat_shi;\n"
         "\n"
-        "  out_FragColor = computePhongLighting( mat, ex_pos, normal );\n"
+        "  fragColor = computePhongLighting( mat, ex_pos, normal );\n"
         "}\n"
         ;
 
@@ -280,7 +280,7 @@ namespace GL {
         "in vec4 in_vertex;\n"
         "in vec4 in_normal;\n"
         "\n"
-        "out vec4 out_Position;\n"
+        "out vec4 gl_Position;\n"
         "\n"
         "smooth out vec3 ex_pos;\n"
         "smooth out vec3 ex_normal;\n"
@@ -296,7 +296,7 @@ namespace GL {
         "  ex_pos = v_pos.xyz * v_pos.w;\n"
         "\n"
         "  // Compute vertex position\n"
-        "  out_Position = u_mvpmat * in_vertex;\n"
+        "  gl_Position = u_mvpmat * in_vertex;\n"
         "}\n"
         ;
 
@@ -314,7 +314,7 @@ namespace GL {
         "smooth in vec3    ex_pos;\n"
         "smooth in vec3    ex_normal;\n"
         "\n"
-        "out vec4 out_FragColor;\n"
+        "out vec4 fragColor;\n"
         "\n"
         "void main() {\n"
         "\n"
@@ -326,7 +326,7 @@ namespace GL {
         "  mat.specular  = u_mat_spc;\n"
         "  mat.shininess = u_mat_shi;\n"
         "\n"
-        "  out_FragColor = computeBlinnPhongLighting( mat, ex_pos, normal );\n"
+        "  fragColor = computeBlinnPhongLighting( mat, ex_pos, normal );\n"
         "}\n"
         ;
 
@@ -356,7 +356,7 @@ namespace GL {
         "in vec4 in_vertex;\n"
         "in vec4 in_normal;\n"
         "\n"
-        "out vec4 out_Position;\n"
+        "out vec4 gl_Position;\n"
         "\n"
         "smooth out vec3 ex_pos;\n"
         "smooth out vec3 ex_normal;\n"
@@ -372,7 +372,7 @@ namespace GL {
         "  ex_pos = v_pos.xyz * v_pos.w;\n"
         "\n"
         "  // Compute vertex position\n"
-        "  out_Position = u_mvpmat * in_vertex;\n"
+        "  gl_Position = u_mvpmat * in_vertex;\n"
         "}\n"
         ;
 
@@ -394,7 +394,7 @@ namespace GL {
         "smooth in vec3    ex_pos;\n"
         "smooth in vec3    ex_normal;\n"
         "\n"
-        "out vec4 out_FragColor;\n"
+        "out vec4 fragColor;\n"
         "\n"
         "void main() {\n"
         "\n"
@@ -412,7 +412,7 @@ namespace GL {
         "  for( unsigned int i = unsigned int(0); i < u_directionallights.info.no_lights; ++i )\n"
         "    color += directionalLighting( u_directionallights.lights[i], mat, ex_pos, normal );\n"
         "\n"
-        "  out_FragColor = vec4(correctGamma(color.rgb,2.2),mat.diffuse.a);\n"
+        "  fragColor = vec4(correctGamma(color.rgb,2.2),mat.diffuse.a);\n"
         "}\n"
         ;
 
@@ -444,11 +444,11 @@ namespace GL {
           "\n"
           "in vec4 in_vertex;\n"
           "\n"
-          "out vec4 out_Position;\n"
+          "out vec4 gl_Position;\n"
           "\n"
           "void main() {\n"
           "\n"
-          "  out_Position = u_mvpmat * in_vertex;\n"
+          "  gl_Position = u_mvpmat * in_vertex;\n"
           "}\n"
           ;
 
@@ -458,11 +458,11 @@ namespace GL {
 
           "uniform vec4 u_color;\n"
           "\n"
-          "out vec4 out_FragColor;\n"
+          "out vec4 fragColor;\n"
           "\n"
           "void main() {\n"
           "\n"
-          "  out_FragColor = u_color;\n"
+          "  fragColor = u_color;\n"
           "}\n"
           ;
 
@@ -513,11 +513,11 @@ namespace GL {
 //          "\n"
 //          "in vec4 ex_color;\n"
 //          "\n"
-//          "out vec4 gl_FragColor;\n"
+//          "out vec4 fragColor;\n"
 //          "\n"
 //          "void main() {\n"
 //          "\n"
-//          "  gl_FragColor = ex_color;\n"
+//          "  fragColor = ex_color;\n"
 //          "}\n"
 //          );
 
@@ -596,7 +596,7 @@ namespace GL {
 //      "smooth in vec3    ex_pos;\n"
 //      "smooth in vec2    ex_tex;\n"
 //      "\n"
-//      "out vec4 gl_FragColor;\n"
+//      "out vec4 fragColor;\n"
 //      "\n"
 //      "void main() {\n"
 //      "\n"
@@ -612,7 +612,7 @@ namespace GL {
 //      "\n"
 //      "  vec4 light_color = vec4(0.0);\n"
 //      "\n"
-//      "  gl_FragColor = computeLighting( mat, normal, ex_pos );\n"
+//      "  fragColor = computeLighting( mat, normal, ex_pos );\n"
 //      "}\n"
 //    );
 

@@ -40,7 +40,6 @@ private:
 
 
 
-
 };
 }
 #endif // BLENDINGSURFACE_H

@@ -16,6 +16,7 @@
 // gmlib
 #include <scene/light/gmpointlight.h>
 #include <scene/sceneobjects/gmpointlightg.h>
+#include <scene/sceneobjects/gmspotlightg.h>
 #include <scene/sceneobjects/gmpathtrack.h>
 #include <scene/sceneobjects/gmpathtrackarrows.h>
 
@@ -51,6 +52,16 @@ void Scenario::initializeScenario() {
   this->scene()->insertLight(light, false);
   this->scene()->insert(light);
 
+  // Insert a spotlight
+  GMlib::Point<float, 3> init_spotlight_pos(2.0, 4.0, 10);
+  GMlib::Vector<float, 3> spotlight_direction(0, -1.0, 0);
+  GMlib::SpotLightG *spotlight =
+      new GMlib::SpotLightG(GMlib::GMcolor::white(), GMlib::GMcolor::white(),
+                            GMlib::GMcolor::white(), init_spotlight_pos, spotlight_direction, GMlib::Angle(20), 2.0);
+  spotlight->setAttenuation(0.8f, 0.002f, 0.0008f);
+  this->scene()->insertLight(spotlight, false);
+  this->scene()->insert(spotlight);
+
   // Insert Sun
   this->scene()->insertSun();
 
@@ -71,6 +82,8 @@ void Scenario::initializeScenario() {
   scene()->insertCamera(proj_rcpair.camera.get());
   proj_rcpair.renderer->reshape(
       GMlib::Vector<int, 2>(init_viewport_size, init_viewport_size));
+
+  proj_rcpair.renderer->setClearColor(GMlib::GMcolor::lightCyan());
 
   /***************************************************************************
    *                                                                         *
@@ -190,7 +203,7 @@ void Scenario::initializeScenario() {
   auto d_vis = new GMlib::PSurfDerivativesVisualizer<double, 3>(0, 1);
 
   surf1->toggleDefaultVisualizer();
-  //surf1->insertVisualizer(n_vis);
+  surf1->insertVisualizer(n_vis);
 
   surf1->sample(200, 200, 1, 1);
   this->scene()->insert(surf1);

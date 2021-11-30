@@ -41,16 +41,11 @@ namespace GMlib{
   class PointLightG : public PointLight {
     GM_SCENEOBJECT(PointLightG)
   public:
-    PointLightG();
-  PointLightG( const Point<float,3>& pos);
-  PointLightG(
-      const Color& amb,
-      const Color& dif,
-      const Color& spe,
-      const Point<float,3>& pos
-  );
-  PointLightG( const PointLight& copy );
-  PointLightG( const PointLightG& copy );
+    PointLightG( float r = 0.5f);
+    PointLightG( const Point<float,3>& pos);
+    PointLightG( const Color& amb, const Color& dif, const Color& spe, const Point<float,3>& pos );
+    PointLightG( const PointLight& copy );
+    PointLightG( const PointLightG& copy );
 
   protected:
     // inherited from SceneObject

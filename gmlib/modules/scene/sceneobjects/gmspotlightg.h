@@ -29,56 +29,45 @@
 
 
 #include "../light/gmspotlight.h"
-#include "gmsphere3d.h"
 
-// stl
-#include <string>
+
 
 
 namespace GMlib {
 
   class SpotLightG : public SpotLight {
     GM_SCENEOBJECT(SpotLightG)
+
   public:
     SpotLightG();
-    SpotLightG(
-      const Point<float,3>& pos,
-      const Vector<float,3>& dir,
-      Angle cut_off
-    );
-    SpotLightG(
-      const Color& amb,
-      const Color& dif,
-      const Color& spe,
-      const Point<float,3>& pos,
-      const Vector<float,3>& dir,
-      Angle cut_off = 90
-    );
+    SpotLightG( const Point<float,3>& pos, const Vector<float,3>& dir, Angle cut_off, double size=1 );
+    SpotLightG( const Color& amb, const Color& dif, const Color& spe, const Point<float,3>& pos, const Vector<float,3>& dir, Angle cut_off = 45, double size=1 );
 
     SpotLightG( const SpotLight& copy );
     SpotLightG( const SpotLightG& copy );
 
-    void            setCutOff(const Angle& cut_off) override;
+    void            setCutOff( const Angle& cut_off ) override;
+    void            setSize( double size ) { _update(size); }
 
   protected:
     // inherited from SceneObject
-    void            localDisplay(const DefaultRenderer *) const override;
-    void            localSelect(const Renderer *, const Color &) const override;
+    void            localDisplay( const DefaultRenderer * ) const override;
+    void            localSelect( const Renderer *, const Color & ) const override;
 
   private:
+    double                    _size;
+
+    GL::Program               _shading_prog;
+    GL::Program               _color_prog;
+
     GL::VertexBufferObject    _light_box_geom_vbo;
     int                       _light_box_geom_elements;
 
     GL::VertexBufferObject    _light_geom_vbo;
     int                       _light_geom_elements;
 
-    GL::Program               _shading_prog;
-    GL::Program               _color_prog;
-
-
     void            init();
-
-
+    void            _update(double size);
   }; // END class SpotLightG
 
 } // END namespace GMlib

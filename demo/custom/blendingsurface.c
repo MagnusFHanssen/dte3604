@@ -14,4 +14,27 @@ BlendingSurface<T>::BlendingSurface(PSurf<T,3>* copy, int u, int v)
 
 
 }
+
+template <typename T>
+BlendingSurface<T>::~BlendingSurface(){}
+
+// Getters
+template <typename T>
+T BlendingSurface<T>::getStartPU() const {return _startU;}
+
+template <typename T>
+T BlendingSurface<T>::getEndPU() const {return _endU;}
+
+template <typename T>
+T BlendingSurface<T>::getStartPV() const {return _startV;}
+
+template <typename T>
+T BlendingSurface<T>::getEndPV() const {return _endV;}
+
+template <typename T>
+bool BlendingSurface<T>::isClosedU() const {return _closedU;}
+
+template <typename T>
+bool BlendingSurface<T>::isClosedV() const {return _closedV;}
+
 }

@@ -184,6 +184,11 @@ target_sources(
   ${SCENE_SRCS_PREFIX}/camera/gmcamera.cpp
   ${SCENE_SRCS_PREFIX}/camera/gmisocamera.cpp
 
+  ${SCENE_SRCS_PREFIX}/light/gmlight.cpp
+  ${SCENE_SRCS_PREFIX}/light/gmpointlight.cpp
+  ${SCENE_SRCS_PREFIX}/light/gmspotlight.cpp
+  ${SCENE_SRCS_PREFIX}/light/gmsun.cpp
+
   ${SCENE_SRCS_PREFIX}/sceneobjects/gmcoordinatesystem.cpp
   ${SCENE_SRCS_PREFIX}/sceneobjects/gmpathtrack.cpp
   ${SCENE_SRCS_PREFIX}/sceneobjects/gmpathtrackarrows.cpp
@@ -194,11 +199,6 @@ target_sources(
   ${SCENE_SRCS_PREFIX}/event/gmeventcontroller.cpp
   ${SCENE_SRCS_PREFIX}/event/gmeventmanager.cpp
   ${SCENE_SRCS_PREFIX}/event/gmsceneobjectattribute.cpp
-
-  ${SCENE_SRCS_PREFIX}/light/gmlight.cpp
-  ${SCENE_SRCS_PREFIX}/light/gmpointlight.cpp
-  ${SCENE_SRCS_PREFIX}/light/gmspotlight.cpp
-  ${SCENE_SRCS_PREFIX}/light/gmsun.cpp
 
   ${SCENE_SRCS_PREFIX}/render/gmdefaultrenderer.cpp
   ${SCENE_SRCS_PREFIX}/render/gmdefaultselectrenderer.cpp

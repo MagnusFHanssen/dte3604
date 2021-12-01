@@ -2,7 +2,7 @@
 #define BLENDINGSURFACE_H
 
 #include <parametrics/gmpsurf.h>
-#include <parametrics/surfaces/gmpsubsurf.h>
+#include "subpatch.h"
 
 namespace Custom{
 
@@ -18,6 +18,8 @@ public:
 
     bool isClosedU() const override;
     bool isClosedV() const override;
+
+    void showLocalSurfaces();
 
 protected:
     void eval( T u, T v, int d1, int d2, bool lu = true, bool lv = true ) const override;
@@ -38,11 +40,25 @@ private:
     T _startV;
     T _endV;
 
+    PSurf<T,3>* _surface;
+
     std::vector<T> _tU;
     std::vector<T> _tV;
 
+    std::vector<std::vector<SubPatch<T>*>> _s;
+
     void _fillKnotVector(std::vector<T> &t, const T startP, const T endP, int steps, bool closed);
+
+    void _makeLocalSurfaces(PSurf<T,3>* surface);
+
+    T _getIndex(T t, bool is_u) const;
+
+    T w(std::vector<T> const& knots, T const t, int i, int d) const;
+
+    Vector<T,2> _blend(T w) const;
 
 };
 }
+
+#include "blendingsurface.c"
 #endif // BLENDINGSURFACE_H

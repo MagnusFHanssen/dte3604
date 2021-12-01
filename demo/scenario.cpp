@@ -9,6 +9,7 @@
 #include "custom/blendingspline.h"
 #include "custom/modelsurface.h"
 #include "custom/ctorus.h"
+#include "custom/blendingsurface.h"
 
 
 // hidmanager
@@ -198,16 +199,22 @@ void Scenario::initializeScenario() {
   //bls->showControlCurves();
   //this->scene()->insert(bls);
 
-  auto surf1 = new Custom::CTorus<double>(); //new Custom::ModelSurface<double>(3, 1.0, 0);
+  auto surf1 = new Custom::CTorus<float>(); //new Custom::ModelSurface<double>(3, 1.0, 0);
 
-  auto n_vis = new GMlib::PSurfNormalsVisualizer<double, 3>();
-  auto d_vis = new GMlib::PSurfDerivativesVisualizer<double, 3>(0, 1);
+  //auto n_vis = new GMlib::PSurfNormalsVisualizer<double, 3>();
+  //auto d_vis = new GMlib::PSurfDerivativesVisualizer<double, 3>(0, 1);
 
   surf1->toggleDefaultVisualizer();
-  surf1->insertVisualizer(d_vis);
+  //surf1->insertVisualizer(d_vis);
 
   surf1->sample(20, 20, 1, 1);
   this->scene()->insert(surf1);
+
+  auto b_surf = new Custom::BlendingSurface<float>(surf1, 10, 10);
+  b_surf->toggleDefaultVisualizer();
+  b_surf->sample(20, 20);
+  b_surf->showLocalSurfaces();
+  this->scene()->insert(b_surf);
 }
 
 void Scenario::cleanupScenario() {}

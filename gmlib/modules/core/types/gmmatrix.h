@@ -514,6 +514,9 @@ public:
   Box<T,3>               operator*(const Box<T,3>& v)          const;
   Matrix<T,4,4>          operator*(const HqMatrix<T,3>& v)  const;
 
+  // Scaling
+  HqMatrix<T,3>          operator*(const double d) const;
+
   // Casting
   template <typename G>
   operator HqMatrix<G,3> () const;

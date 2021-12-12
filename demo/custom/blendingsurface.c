@@ -62,19 +62,28 @@ void BlendingSurface<T>::_fillKnotVector(std::vector<T> &t, const T startP,
 
 template <typename T>
 void BlendingSurface<T>::_makeLocalSurfaces(PSurf<T, 3> *surface) {
-  _s.resize(_tU.size() - _closedU);
+    int nu = _tU.size() - 1 - !_closedU;
+    int nv = _tV.size() - 1 - !_closedV;
+  _s.setDim(nu, nv);
 
-  for (int i = 0; i < _tU.size() - 2 - _closedU; i++) {
-    _s[i].resize(_tV.size() - _closedV);
-    for (int j = 0; j < _tV.size() - 2 - _closedV; j++) {
-      _s[i][j] = new SubPatch<T>(surface, _tU[i + 1], _tV[i + 1]);
+  for (int i = 0; i < nu; i++) {
+    for (int j = 0; j < nv; j++) {
+      _s[i][j] = new SubPatch<T>(surface, _tU[i + 1], _tV[j + 1]);
     }
     if (_closedV) {
-      _s[i][_tV.size() - 3] = _s[i][0];
+      _s[i][nv] = _s[i][0];
+
+//      _s(i)(0)->insert(_s(i)(nv));
+//      _s(i)(nv)->setIsPart(true);
     }
   }
   if (_closedU) {
-    _s[_tU.size() - 3] = _s[0];
+      for (int j  = 0; j < _s.getDim2(); j++){
+    _s[_s.getDim1() - 1][j] = _s[0][j];
+
+//    _s(0)(j)->insert(_s(_s.getDim1() - 1)(j));
+//    _s(_s.getDim1() - 1)(j)->setIsPart(true);
+      }
   }
 }
 
@@ -106,8 +115,8 @@ void BlendingSurface<T>::eval(T u, T v, int d1, int d2, bool lu,
     int i_v = _getIndex(v, false);
 
     HqMatrix<T,3> A_[2][2] = {
-        {_s[i_u - 1][i_v - 1]->getMatrix(), _s[i_u - 1][i_v]->getMatrix()},
-        {_s[i_u][i_v - 1]->getMatrix(), _s[i_u][i_v]->getMatrix()}
+        {_s(i_u - 1)(i_v - 1)->getMatrix(), _s(i_u - 1)(i_v)->getMatrix()},
+        {_s(i_u)(i_v - 1)->getMatrix(), _s(i_u)(i_v)->getMatrix()}
     };
 
     HqMatrix<T,3> A_arr[3] = {
@@ -119,7 +128,7 @@ void BlendingSurface<T>::eval(T u, T v, int d1, int d2, bool lu,
     Vector<T,2> b_u = _blend(w(_tU, u, i_u, 1));
     Vector<T,2> b_v = _blend(w(_tV, v, i_v, 1));
 
-    HqMatrix<T,3> A = A_[0][0] + A_arr[0] * b_u[0] + A_arr[1] * b_u[1] + A_arr[2] * (b_u[0] * b_v[0]);
+    HqMatrix<T,3> A = A_[0][0] + A_arr[0] * b_u[0] + A_arr[1] * b_v[0] + A_arr[2] * (b_u[0] * b_v[0]);
     HqMatrix<T,3> A_u = A_arr[0] * b_u[1] + A_arr[2] * (b_u[1] * b_v[0]);
     HqMatrix<T,3> A_v = A_arr[1] * b_v[1] + A_arr[2] * (b_u[0] * b_v[1]);
 
@@ -130,7 +139,7 @@ void BlendingSurface<T>::eval(T u, T v, int d1, int d2, bool lu,
     Vector<T,3> S_u = S[1][0];
     Vector<T,3> S_v = S[0][1];
 
-    this->_p[0][0] = A * p;
+    this->_p[0][0] = A * p * 0.5;
     this->_p[1][0] = A_u * p + A * S_u;
     this->_p[0][1] = A_v * p + A * S_v;
 
@@ -138,12 +147,26 @@ void BlendingSurface<T>::eval(T u, T v, int d1, int d2, bool lu,
 
 template <typename T>
 void BlendingSurface<T>::showLocalSurfaces(){
-    for (std::vector<SubPatch<T>*> vec : _s){
-        for (SubPatch<T>* surf : vec){
-            surf->setCollapsed(true);
-            this->insert(surf);
+    for (int i = 0; i < _s.getDim1() /*- _closedU*/; i++){
+        for (int j = 0; j < _s.getDim2() /*- _closedV*/; j++){
+            _s(i)(j)->setCollapsed(true);
+            this->insert(_s(i)(j));
         }
     }
+}
+
+template <typename T>
+void BlendingSurface<T>::localSimulate(double dt){
+    this->sample(20, 20, 1 ,1);
+    this->setEditDone();
+
+}
+
+template <typename T>
+void BlendingSurface<T>::edit(SceneObject* lp){
+    this->sample(20, 20, 1 ,1);
+    this->setEditDone();
+
 }
 
 } // namespace Custom

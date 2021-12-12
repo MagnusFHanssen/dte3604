@@ -52,7 +52,7 @@ void Scenario::initializeScenario() {
                             GMlib::GMcolor::white(), init_light_pos);
   light->setAttenuation(0.8f, 0.002f, 0.0008f);
   this->scene()->insertLight(light, false);
-  this->scene()->insert(light);
+  //this->scene()->insert(light);
 
   // Insert a spotlight
   GMlib::Point<float, 3> init_spotlight_pos(2.0, 4.0, 10);
@@ -62,7 +62,7 @@ void Scenario::initializeScenario() {
                             GMlib::GMcolor::white(), init_spotlight_pos, spotlight_direction, GMlib::Angle(20), 2.0);
   spotlight->setAttenuation(0.8f, 0.002f, 0.0008f);
   this->scene()->insertLight(spotlight, false);
-  this->scene()->insert(spotlight);
+  //this->scene()->insert(spotlight);
 
   // Insert Sun
   this->scene()->insertSun();
@@ -85,7 +85,7 @@ void Scenario::initializeScenario() {
   proj_rcpair.renderer->reshape(
       GMlib::Vector<int, 2>(init_viewport_size, init_viewport_size));
 
-  proj_rcpair.renderer->setClearColor(GMlib::GMcolor::lightCyan());
+  //proj_rcpair.renderer->setClearColor(GMlib::GMcolor::lightCyan());
 
   /***************************************************************************
    *                                                                         *
@@ -107,28 +107,28 @@ void Scenario::initializeScenario() {
   //  ptrack2->setArrowLength(2);
   //  ptom->insert(ptrack2);
 
-//    auto lotus = new Custom::Lotus();
-//    lotus->toggleDefaultVisualizer();
-//    lotus->sample(400);
-//    //this->scene()->insert(lotus);
-//    lotus->setColor(GMlib::Color(153, 255 ,255));
+    auto lotus = new Custom::Lotus();
+    lotus->toggleDefaultVisualizer();
+    lotus->sample(400);
+    //this->scene()->insert(lotus);
+    lotus->setColor(GMlib::Color(153, 255 ,255));
 
 
-//  // The controls for quicly swapping between several configuration without comments
-//  bool showDottedLines = false;
-//  bool showControlPoly = false;
+  // The controls for quicly swapping between several configuration without comments
+  bool showDottedLines = false;
+  bool showControlPoly = true;
 
 
-//  GMlib::DVector<GMlib::Point<double, 3>> controlPoints(9);
-//  controlPoints[0] = GMlib::Point<double, 3>(0, 0, 0);
-//  controlPoints[1] = GMlib::Point<double, 3>(0, 1, 0);
-//  controlPoints[2] = GMlib::Point<double, 3>(3, 0, 1);
-//  controlPoints[3] = GMlib::Point<double, 3>(3, 4, 0);
-//  controlPoints[4] = GMlib::Point<double, 3>(0, 1, 6);
-//  controlPoints[5] = GMlib::Point<double, 3>(1, 1, 1);
-//  controlPoints[6] = GMlib::Point<double, 3>(0, 8, 0);
-//  controlPoints[7] = GMlib::Point<double, 3>(0, 1, 8);
-//  controlPoints[8] = GMlib::Point<double, 3>(9, 0, 1);
+  GMlib::DVector<GMlib::Point<double, 3>> controlPoints(9);
+  controlPoints[0] = GMlib::Point<double, 3>(0, 0, 0);
+  controlPoints[1] = GMlib::Point<double, 3>(0, 1, 0);
+  controlPoints[2] = GMlib::Point<double, 3>(3, 0, 1);
+  controlPoints[3] = GMlib::Point<double, 3>(3, 4, 0);
+  controlPoints[4] = GMlib::Point<double, 3>(0, 1, 6);
+  controlPoints[5] = GMlib::Point<double, 3>(1, 1, 1);
+  controlPoints[6] = GMlib::Point<double, 3>(0, 8, 0);
+  controlPoints[7] = GMlib::Point<double, 3>(0, 1, 8);
+  controlPoints[8] = GMlib::Point<double, 3>(9, 0, 1);
 
 //  for (int i = 0; i < 9 && showControlPoly; i++) {
 //    auto sph = new GMlib::PSphere<double>(0.1);
@@ -145,9 +145,9 @@ void Scenario::initializeScenario() {
 //    this->scene()->insert(lin);
 //  }
 
-//  auto c_viz = new GMlib::PCurvePointsVisualizer<double, 3>(3);
-//  auto c_viz2 = new GMlib::PCurvePointsVisualizer<double, 3>(3);
-//  c_viz2->setColor(GMlib::GMcolor::green());
+  auto c_viz = new GMlib::PCurvePointsVisualizer<double, 3>(3);
+  auto c_viz2 = new GMlib::PCurvePointsVisualizer<double, 3>(3);
+  c_viz2->setColor(GMlib::GMcolor::green());
 
 //  auto spline = new Custom::BSplineCustom<double>(controlPoints);
 //  spline->setColor(GMlib::GMcolor::red());
@@ -156,20 +156,20 @@ void Scenario::initializeScenario() {
 //  } else {
 //    spline->toggleDefaultVisualizer();
 //  }
-//  //spline->sample(200, 0);
-//  //this->scene()->insert(spline);
+//  spline->sample(200, 0);
+//  this->scene()->insert(spline);
 
 
 //  auto spline2 = new Custom::BSplineCustom<double>(controlPoints);
 //  spline2->setColor(GMlib::GMcolor::green());
 //  if (showDottedLines) {
-//    spline2->insertVisualizer(c_viz2);
+//      spline2->insertVisualizer(c_viz2);
 //  } else {
-//    spline2->toggleDefaultVisualizer();
+//      spline2->toggleDefaultVisualizer();
 //  }
 //  spline2->setBlending(true);
-//  //spline2->sample(200, 0);
-////  this->scene()->insert(spline2);
+//  spline2->sample(200, 0);
+//    this->scene()->insert(spline2);
 
 //  GMlib::DVector<GMlib::Point<double,3>> points(12);
 //  for (int i  =0; i < 12; i++){
@@ -188,14 +188,14 @@ void Scenario::initializeScenario() {
 //  auto lr = new Custom::LaneRiesenfeldClosed<double>(controlPoints, 2);
 //  lr->sample(4, 0);
 //  lr->toggleDefaultVisualizer();
-  //this->scene()->insert(lr);
+//  this->scene()->insert(lr);
 
 //  auto circle = new GMlib::PCircle<double>();
 
-//  auto bls = new Custom::BlendingSpline<double>(lotus, 10);
-//  bls->toggleDefaultVisualizer();
+  auto bls = new Custom::BlendingSpline<double>(lotus, 10);
+  bls->toggleDefaultVisualizer();
   //bls->insertVisualizer(c_viz);
-  //bls->sample(200, 0);
+  bls->sample(200, 0);
   //bls->showControlCurves();
   //this->scene()->insert(bls);
 
@@ -209,6 +209,7 @@ void Scenario::initializeScenario() {
 
   surf1->sample(20, 20, 1, 1);
   this->scene()->insert(surf1);
+  surf1->setMaterial(GMlib::GMmaterial::emerald());
 
   auto b_surf = new Custom::BlendingSurface<float>(surf1, 10, 10);
   b_surf->toggleDefaultVisualizer();

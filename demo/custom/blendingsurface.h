@@ -29,6 +29,9 @@ protected:
     T getStartPV() const override;
     T getEndPV() const override;
 
+    void localSimulate(double dt) override;
+    void edit(SceneObject* lp) override;
+
     void init();
 
 private:
@@ -45,7 +48,8 @@ private:
     std::vector<T> _tU;
     std::vector<T> _tV;
 
-    std::vector<std::vector<SubPatch<T>*>> _s;
+    // TODO: Swap with a DMatrix
+    DMatrix<SubPatch<T>*> _s;
 
     void _fillKnotVector(std::vector<T> &t, const T startP, const T endP, int steps, bool closed);
 

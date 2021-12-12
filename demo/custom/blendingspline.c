@@ -124,6 +124,8 @@ void BlendingSpline<T>::localSimulate(double dt){
     double r = 0.000001 + (1.0 - (1.0/(48 * M_PI))*(27*cos(_angle) - 3*cos(3*_angle))) * dt;
     for (auto &curve: _c){
         curve->rotate(Angle(r), Vector<T,3>(0, 0, 1));
+        curve->translate(Vector<T,3>(0, r, 0));
+        curve->scale(Point<T,3>(1, 1, 1) * (1 + 0.00001 * sin(_angle)));
     }
     _angle += r;
     if (_angle >= M_2PI){_angle -= M_2PI;}
